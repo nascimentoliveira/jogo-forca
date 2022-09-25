@@ -23,7 +23,6 @@ export default function App() {
 }
 
 const Main = styled.main`
-  padding: 5%;
   position:absolute; 
   top:0; 
   bottom:0; 
@@ -39,6 +38,7 @@ const Content = styled.article`
 	height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
