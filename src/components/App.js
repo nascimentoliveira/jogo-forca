@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Game from "./Game"
-import Letters from "./Letters"
-import Guess from "./Guess"
-import GlobalStyle from "../assets/theme/globalStyles"
+import Game from "./Game";
+import Letters from "./Letters";
+import Guess from "./Guess";
+import GlobalStyle from "../assets/theme/globalStyles";
 
 export default function App() {
   // === LOGIC ===
@@ -12,31 +12,17 @@ export default function App() {
     <>
       <GlobalStyle />
       <Main>
-        <Content>
-          <Game />
-          <Letters />
-          <Guess />
-        </Content>
+        <Game />
+        <Letters />
+        <Guess />
       </Main>
     </>
   );
 }
 
 const Main = styled.main`
-  position:absolute; 
-  top:0; 
-  bottom:0; 
-  right:0; 
-  left:0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
   background-color: #EFEFEF;
-`;
-
-const Content = styled.article`
-	height: 100%;
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -16,75 +16,91 @@ export default function Game() {
   return (
     <GameDisplay>
       <Scoreboard>
-        <img src={gallow6}/>
+        <img src={gallow6} />
       </Scoreboard>
       <WordDisplay>
         <button>SORTEAR NOVA PALAVRA</button>
-        <Match>
+        <ul>
           <Letter>_</Letter>
           <Letter>_</Letter>
           <Letter>_</Letter>
           <Letter>_</Letter>
           <Letter>_</Letter>
           <Letter>_</Letter>
-        </Match>
+          <Letter>_</Letter>
+          <Letter>_</Letter>
+        </ul>
       </WordDisplay>
     </GameDisplay>
   );
 }
 
-const GameDisplay = styled.figure`
+const GameDisplay = styled.section`
   width: 100%;
-  height: 60%;
-  display: flex;
-  align-items: center;
-`;
-
-const Scoreboard = styled.figure`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    max-width: 300px;
-    width: 100%;
-    height: auto;
-  }
-`;
-
-const WordDisplay = styled.section`
-  max-width: 50%;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  button {
-    background-color: #27AE60;
-    color: #FFFFFF;
-    max-width: 150px;
-    width: 100%;
-    height: 50px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-  }
-`;
-
-const Match = styled.section`
-  width: 100%;
+  margin: 20px 0px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 `;
 
-const Letter = styled.div`
-  margin: 0px 10px;
-  width: 30px;
-  height: 30px;
+const Scoreboard = styled.figure`
+  width: auto;
+  min-width: 200px;
+  margin: 20px auto;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: flex-end;
+  img {
+    width: 100%;
+    max-width: 300px;
+  }
+`;
+
+const WordDisplay = styled.section`
+  width: auto;
+  min-width: 200px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+  button {
+    font-family: 'Ubuntu', sans-serif;
+    min-width: 100px;
+    width: 40%;
+    min-height: 45px;
+    margin: 20px auto;
+    font-size: 17px;
+    line-height: 25px;
+    color: #27AE60;
+    background-color: #AAFFCC;
+    border: 2px solid #27AE60;
+    border-radius: 10px;
+    transition-duration: 0.4s;
+    &:hover {
+      color: white;
+      background-color: #27AE60;
+    }
+  }
+
+  ul {
+    width: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+`;
+
+const Letter = styled.li`
+  font-family: 'Ubuntu', sans-serif;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  font-size: 20px;
+  line-height: 40px;
+  text-align: center;
+  color: #80848A; 
+  background-color: #9FAAB5; //#E1ECF4
+  border-radius: 5px;
 `;
