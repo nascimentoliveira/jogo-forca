@@ -13,8 +13,8 @@ export default function Letters() {
   return (
     <Keyboard>
       <ul>
-        {alphabet.map((letter) => (
-          <Letter>{letter.toUpperCase()}</Letter>
+        {alphabet.map((letter, index) => (
+          <Letter key={index}>{letter.toUpperCase()}</Letter>
         ))}
       </ul>
     </Keyboard>
@@ -26,7 +26,7 @@ const Keyboard = styled.section`
   max-width: 650px;
   width: 90%;
   margin: 20px 0px;
-  
+
   ul {
     display: flex;
     justify-content: center;

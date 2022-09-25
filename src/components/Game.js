@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import words from "./words";
 import gallow0 from "../assets/images/forca0.png";
 import gallow1 from "../assets/images/forca1.png";
 import gallow2 from "../assets/images/forca2.png";
@@ -11,6 +12,13 @@ const images = [gallow0, gallow1, gallow2, gallow3, gallow4, gallow5, gallow6];
 
 export default function Game() {
   // === LOGIC ===
+  function getRandom(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  const wordDrawn = words[getRandom(words.length)].split("");
+  console.log(wordDrawn);
+  const guessedLetters = wordDrawn.map(() => '_');
 
   // === UI ===
   return (
@@ -21,14 +29,9 @@ export default function Game() {
       <WordDisplay>
         <button>SORTEAR NOVA PALAVRA</button>
         <ul>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
-          <Letter>_</Letter>
+          {guessedLetters.map((letter, index) => (
+            <Letter key={index}>{letter}</Letter>
+          ))};
         </ul>
       </WordDisplay>
     </GameDisplay>
@@ -47,9 +50,6 @@ const Scoreboard = styled.figure`
   width: auto;
   min-width: 200px;
   margin: 20px auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
   img {
     width: 100%;
     max-width: 300px;
@@ -58,21 +58,20 @@ const Scoreboard = styled.figure`
 
 const WordDisplay = styled.section`
   width: auto;
-  min-width: 200px;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  
+
   button {
     font-family: 'Ubuntu', sans-serif;
+    max-width: 100%;
     min-width: 100px;
-    width: 40%;
     min-height: 45px;
     margin: 20px auto;
+    padding: 15px;
     font-size: 17px;
-    line-height: 25px;
     color: #27AE60;
     background-color: #AAFFCC;
     border: 2px solid #27AE60;
@@ -100,7 +99,7 @@ const Letter = styled.li`
   font-size: 20px;
   line-height: 40px;
   text-align: center;
-  color: #80848A; 
-  background-color: #9FAAB5; //#E1ECF4
+  color: #FFFFFF; 
+  background-color: #606060; //#E1ECF4
   border-radius: 5px;
 `;
