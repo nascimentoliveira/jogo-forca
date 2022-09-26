@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React from "react";
+import words from "./words";
 import Game from "./Game";
 import Letters from "./Letters";
 import Guess from "./Guess";
@@ -12,7 +13,6 @@ export default function App() {
   const guessedLetters = React.useState([]);
   const gameState = React.useState("start")
   const hits = React.useState(0);
-  const withoutAccents = []
 
   // === UI ===
   return (
@@ -20,6 +20,7 @@ export default function App() {
       <GlobalStyle />
       <Main>
         <Game
+          words={words}
           currentWord={currentWord}
           clickedLetters={clickedLetters}
           guessedLetters={guessedLetters}
@@ -33,7 +34,13 @@ export default function App() {
           gameState={gameState}
           hits={hits}
         />
-        <Guess />
+        <Guess
+          currentWord={currentWord}
+          clickedLetters={clickedLetters}
+          guessedLetters={guessedLetters}
+          gameState={gameState}
+          hits={hits}
+        />
       </Main>
     </>
   );

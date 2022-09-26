@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import words from "./words";
 import gallow0 from "../assets/images/forca0.png";
 import gallow1 from "../assets/images/forca1.png";
 import gallow2 from "../assets/images/forca2.png";
@@ -7,21 +6,19 @@ import gallow3 from "../assets/images/forca3.png";
 import gallow4 from "../assets/images/forca4.png";
 import gallow5 from "../assets/images/forca5.png";
 import gallow6 from "../assets/images/forca6.png";
-import React from "react";
 
 const images = [gallow0, gallow1, gallow2, gallow3, gallow4, gallow5, gallow6];
-
 
 export default function Game(props) {
   // === LOGIC ===
   const {
-    currentWord: [, setWord],
+    words,
+    currentWord: [[ , withoutAccents], setWord],
     clickedLetters: [clickedLetters, setClicked],
     guessedLetters: [guessedLetters, setGuessed],
     gameState: [gameState, setGameState],
     hits: [hits, setHits]
   } = props;
-
 
   function getRandom(max) {
     return Math.floor(Math.random() * max);
@@ -41,7 +38,7 @@ export default function Game(props) {
   function startGame() {
     const word = words[getRandom(words.length)].toUpperCase();
     const guessed = word.split('').map(() => '_');
-    console.log(word.split(''), cleanUpAccents(word).split(''));
+    console.log(word)
     setHits(0);
     setWord([word.split(''), cleanUpAccents(word).split('')]);
     setGuessed(guessed);
@@ -49,34 +46,57 @@ export default function Game(props) {
     setClicked([]);
   }
 
-  function labelLetters(letter) {
-    if (gameState !== "end") {
-      return { font: "#FFFFFF", background: "#606060", border: "#606060" }
-    } else {
+  function colorLabel(letter) {
+    if (gameState === "playing")
+      return { font: "#FFFFFF", background: "#606060", border: "#606060" };
+    if (gameState === "end") {
       if (clickedLetters.length - hits === 6) {
         if (clickedLetters.includes(cleanUpAccents(letter)))
-          return { font: "#6DBC69", background: "#EA625B", border: "#6DBC69" };
+          return { font: "#BF362F", background: "#EA625B", border: "#6DBC69" };
         else
-          return { font: "#606060", background: "#EA625B", border: "#606060" };
+          return { font: "#BF362F", background: "#EA625B", border: "#606060" };
       } else {
         return { font: "#6DBC69", background: "#95EA91", border: "#6DBC69" };
       }
     }
+    if (gameState === "end-guess") {
+      if (hits === [...new Set(withoutAccents)].length)
+        return { font: "#6DBC69", background: "#95EA91", border: "#6DBC69" };
+      else
+        return { font: "#BF362F", background: "#EA625B", border: "#BF362F" };
+    }
+  }
+
+  function setImage() {
+    if (gameState === "end-guess") {
+      if (hits !== [...new Set(withoutAccents)].length)
+        return images[images.length - 1];
+    }
+    return images[clickedLetters.length - hits];
   }
 
   // === UI ===
   return (
     <GameDisplay>
       <Scoreboard>
-        <img src={images[clickedLetters.length - hits]} />
+        <img
+          src={setImage()}
+          alt={`Errou ${clickedLetters.length - hits} vezes`}
+          data-identifier="game-image"
+        />
       </Scoreboard>
       <WordDisplay>
-        <button onClick={startGame}>SORTEAR NOVA PALAVRA</button>
-        <ul>
+        <button
+          onClick={startGame}
+          data-identifier="choose-word"
+        >
+          SORTEAR NOVA PALAVRA
+        </button>
+        <ul data-identifier="word">
           {guessedLetters.map((letter, index) => (
             <Letter
               key={index}
-              colorLabel={labelLetters(letter)}
+              colorLabel={colorLabel(letter)}
             >
               {letter}
             </Letter>
@@ -126,6 +146,7 @@ const WordDisplay = styled.section`
     border: 2px solid #27AE60;
     border-radius: 10px;
     transition-duration: 0.4s;
+
     &:hover {
       color: white;
       background-color: #27AE60;

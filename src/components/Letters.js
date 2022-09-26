@@ -1,8 +1,8 @@
-
 import styled from "styled-components";
 
 export default function Letters(props) {
   // === LOGIC ===
+  const maxErrors = 6;
   const {
     currentWord: [[currentWord, withoutAccents],],
     clickedLetters: [clickedLetters, setClicked],
@@ -24,7 +24,7 @@ export default function Letters(props) {
       setHits(currentHits);
       setGuessed(withoutAccents.map((letter, index) => lettersClicked.includes(letter) ? currentWord[index] : '_'));
     }
-    if (lettersClicked.length - currentHits === 6 || currentHits === [...new Set(currentWord)].length) {
+    if (lettersClicked.length - currentHits === maxErrors || currentHits === [...new Set(withoutAccents)].length) {
       setGameState("end");
       setGuessed(currentWord.map((letter, index) => currentWord[index]));
     }
@@ -36,7 +36,7 @@ export default function Letters(props) {
   }
 
   function setDisableItem(letter) {
-    if (gameState === "start" || gameState === "end")
+    if (gameState !== "playing")
       return true;
     else if (clickedLetters.includes(letter))
       return true;
@@ -45,7 +45,8 @@ export default function Letters(props) {
   }
 
   function labelLetters(disabled, letter) {
-    if (disabled && !clickedLetters.includes(letter))
+    if ((disabled && !clickedLetters.includes(letter)) ||
+      (clickedLetters.includes(letter) && withoutAccents.includes(letter) && gameState === "end-guess"))
       return { font: "#B8C0C8", background: "#9FAAB5", border: "#B8C0C8" };
     else if (!disabled && !clickedLetters.includes(letter))
       return { font: "#80ABC9", background: "#E1ECF4", border: "#80ABC9" }
@@ -65,6 +66,7 @@ export default function Letters(props) {
             onClick={() => letterClicked(letter)}
             disabled={setDisableItem(letter)}
             colorLabel={labelLetters(setDisableItem(letter), letter)}
+            data-identifier="letter"
           >
             {letter}
           </Letter>
@@ -100,6 +102,7 @@ const Letter = styled.button`
   background-color: ${props => props.colorLabel.background};
   transition-duration: 0.3s;
   border-radius: 5px;
+
   &:hover {
     color: ${props => { if (!props.disabled) return "#FFFFFF" }};
     background-color: ${props => { if (!props.disabled) return props.colorLabel.border }};
