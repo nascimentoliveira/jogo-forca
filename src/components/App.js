@@ -5,32 +5,33 @@ import Letters from "./Letters";
 import Guess from "./Guess";
 import GlobalStyle from "../assets/theme/globalStyles";
 
-let word = [];
-let guessed = [];
-
 export default function App() {
   // === LOGIC ===
-  const currentWord = React.useState([]);
+  const currentWord = React.useState([[], []]);
   const clickedLetters = React.useState([]);
   const guessedLetters = React.useState([]);
-  const initialState = React.useState(true);
-  
+  const gameState = React.useState("start")
+  const hits = React.useState(0);
+  const withoutAccents = []
+
   // === UI ===
   return (
     <>
       <GlobalStyle />
       <Main>
         <Game
-          currentWord={currentWord} 
-          clickedLetters={clickedLetters} 
+          currentWord={currentWord}
+          clickedLetters={clickedLetters}
           guessedLetters={guessedLetters}
-          initialState={initialState}
+          gameState={gameState}
+          hits={hits}
         />
         <Letters
-          currentWord={currentWord} 
-          clickedLetters={clickedLetters} 
+          currentWord={currentWord}
+          clickedLetters={clickedLetters}
           guessedLetters={guessedLetters}
-          initialState={initialState}
+          gameState={gameState}
+          hits={hits}
         />
         <Guess />
       </Main>
