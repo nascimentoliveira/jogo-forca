@@ -7,18 +7,32 @@ import gallow3 from "../assets/images/forca3.png";
 import gallow4 from "../assets/images/forca4.png";
 import gallow5 from "../assets/images/forca5.png";
 import gallow6 from "../assets/images/forca6.png";
+import React from "react";
 
 const images = [gallow0, gallow1, gallow2, gallow3, gallow4, gallow5, gallow6];
 
-export default function Game() {
+
+export default function Game(props) {
   // === LOGIC ===
+  const {
+    currentWord: [currentWord, setWord],
+    clickedLetters: [clickedLetters, setClicked], 
+    guessedLetters: [guessedLetters, setGuessed],
+    initialState: [initialState, setInitial]
+  } = props;
+
   function getRandom(max) {
     return Math.floor(Math.random() * max);
   }
 
-  const wordDrawn = words[getRandom(words.length)].split("");
-  console.log(wordDrawn);
-  const guessedLetters = wordDrawn.map(() => '_');
+  function drawWord() {
+    const word = words[getRandom(words.length)].split("");
+    const guessed = word.map(() => '_');
+    setWord(word);
+    setGuessed(guessed);
+    setInitial(false);
+    setClicked([]);
+  }
 
   // === UI ===
   return (
@@ -27,11 +41,11 @@ export default function Game() {
         <img src={gallow6} />
       </Scoreboard>
       <WordDisplay>
-        <button>SORTEAR NOVA PALAVRA</button>
+        <button onClick={drawWord}>SORTEAR NOVA PALAVRA</button>
         <ul>
           {guessedLetters.map((letter, index) => (
             <Letter key={index}>{letter}</Letter>
-          ))};
+          ))}
         </ul>
       </WordDisplay>
     </GameDisplay>
