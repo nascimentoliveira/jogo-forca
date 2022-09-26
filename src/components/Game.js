@@ -38,7 +38,6 @@ export default function Game(props) {
   function startGame() {
     const word = words[getRandom(words.length)].toUpperCase();
     const guessed = word.split('').map(() => '_');
-    console.log(word)
     setHits(0);
     setWord([word.split(''), cleanUpAccents(word).split('')]);
     setGuessed(guessed);
